@@ -15,19 +15,28 @@ class Users {
     async create(req: Request, res: Response) {
         
         let { body } = req;
-
-        const user = await User.create({
-            name: body.name,
-            phone: body.phone,
-            email: body.email,
-            password: bcrypt.hashSync(body.password, 10)
-        });
-
+        
         try {
-            const UserSaved = await user.save();
+            const emailExists = await User.findOne({
+                where: {
+                    email: body.email
+                }
+            });
+            if(emailExists) {
+                return res.status(400).json({
+                    msg: `Email ${body.email} already exists!`
+                });
+            } 
+            const user = await User.create({
+                name: body.name,
+                phone: body.phone,
+                email: body.email,
+                password: bcrypt.hashSync(body.password, 10)
+            });
+            await user.save();
             res.json({
                 ok: true,
-                user: UserSaved
+                user: user
             });
         } catch (error) {
             return res.status(500).json({
@@ -56,6 +65,9 @@ class Users {
 
         try {
             const user = await User.findByPk(id);
+            if(user?.dataValues.password) {
+                delete user.dataValues.password;
+            }
             res.json({
                 ok: true,
                 user: user
@@ -71,10 +83,28 @@ class Users {
     async update(req: Request, res: Response) {
         
         let { id } = req.params;
-        let { body } = req.body;
+        let { body } = req;
 
         try {
-            const user = await User;
+            const user = await User.findByPk(id);
+            
+            if(!user) {
+                return res.status(404).json({
+                    msg: 'User does not exist!'
+                });
+            }
+            const emailExists = await User.findOne({
+                where: {
+                    email: body.email
+                }
+            });
+            if(emailExists) {
+                return res.status(400).json({
+                    msg: `Email ${body.email} already exists!`
+                });
+            } 
+            await user.update(body);
+            
             res.json({
                 ok: true,
                 user
@@ -93,7 +123,13 @@ class Users {
 
         try {
             const user = await User.findByPk(id);
-            await user?.destroy();
+            if(!user) {
+                return res.status(404).json({
+                    msg: 'User does not exist!'
+                });
+            }
+            
+            await user.destroy();
             res.json({
                 ok: true,
                 message: 'User deleted successfully'
@@ -108,10 +144,10 @@ class Users {
 
     routes() {
         this.router.get('/', this.get);
-        this.router.get('/:id', [verificaToken, verificaAdminRole], this.getUser);
+        this.router.get('/:id', this.getUser);
         this.router.post('/', this.create);
-        this.router.put('/:id', [verificaToken, verificaAdminRole], this.update);
-        this.router.delete('/:id', [verificaToken, verificaAdminRole], this.delete);
+        this.router.put('/:id', this.update);
+        this.router.delete('/:id', this.delete);
     }
 }
 
