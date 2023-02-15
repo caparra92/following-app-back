@@ -8,6 +8,9 @@ const item = db.define('item', {
     },
     description: {
         type: DataTypes.STRING
+    },
+    activity_id: {
+        type: DataTypes.STRING
     }
 },{freezeTableName:true});
 

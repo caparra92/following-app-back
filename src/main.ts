@@ -5,6 +5,8 @@ import routes from './routes/Routes';
 import users from './routes/Users';
 import activities from './routes/Activities';
 import activityTypes from './routes/ActivityTypes';
+import items from './routes/Items';
+import histories from './routes/Histories';
 import login from './routes/Login';
 import db from './db/connection';
 
@@ -47,6 +49,8 @@ class Server {
         this.app.use('/api/users', users);
         this.app.use('/api/activities', activities);
         this.app.use('/api/activityTypes', activityTypes);
+        this.app.use('/api/items', items);
+        this.app.use('/api/histories', histories);
         this.app.use('/api/login', login);
     }
 
