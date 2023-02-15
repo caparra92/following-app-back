@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
 
-const history = db.define('History', {
+const history = db.define('history', {
     date: {
         type: DataTypes.DATE
     },
@@ -12,6 +12,6 @@ const history = db.define('History', {
     value: {
         type: DataTypes.INTEGER
     }
-});
+},{freezeTableName:true});
 
 export default history;
