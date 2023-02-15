@@ -2,13 +2,13 @@ import { DataTypes } from 'sequelize';
 import db from '../db/connection';
 
 
-const item = db.define('Item', {
+const item = db.define('item', {
     name: {
         type: DataTypes.STRING
     },
     description: {
         type: DataTypes.STRING
     }
-});
+},{freezeTableName:true});
 
 export default item;

@@ -3,8 +3,11 @@ import express from 'express';
 import cors from 'cors';
 import routes from './routes/Routes';
 import users from './routes/Users';
+import activities from './routes/Activities';
+import activityTypes from './routes/ActivityTypes';
 import login from './routes/Login';
 import db from './db/connection';
+
 
 class Server {
 
@@ -42,6 +45,8 @@ class Server {
     routes() {
         this.app.use(routes);
         this.app.use('/api/users', users);
+        this.app.use('/api/activities', activities);
+        this.app.use('/api/activityTypes', activityTypes);
         this.app.use('/api/login', login);
     }
 
