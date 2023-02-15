@@ -6,10 +6,13 @@ const history = db.define('history', {
     date: {
         type: DataTypes.DATE
     },
-    item: {
+    value: {
         type: DataTypes.STRING
     },
-    value: {
+    item_id: {
+        type: DataTypes.INTEGER
+    },
+    activity_id: {
         type: DataTypes.INTEGER
     }
 },{freezeTableName:true});
