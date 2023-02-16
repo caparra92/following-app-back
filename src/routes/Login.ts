@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import {User} from '../models/User';
+import User from '../models/User';
 import  {verificaToken, verificaAdminRole} from '../middlewares/auth';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -15,8 +15,35 @@ class Login {
     }
 
     async login(req: Request, res: Response) {
-        
-       
+
+        let { body } = req;
+        try {
+            const user = await User.findOne({
+                where: {
+                    email: body.email
+                }
+            });
+
+            if(!user || !bcrypt.compareSync(body.password, user?.dataValues.password)) {
+                return res.status(400).json({
+                    error : 'Error during authentication, please check email or password'
+                });
+            }
+            let token = jwt.sign({
+                user,
+            }, config.SEED,{ expiresIn: process.env.EXPIRACION });
+    
+            res.json({
+                ok: true,
+                usuario: user,
+                token
+              });
+        } catch (error) {
+            res.status(500).json({
+                msg: 'Server error',
+                error
+            });
+        }
 
     }
 
