@@ -120,11 +120,11 @@ class ActivityTypes {
     }
 
     routes() {
-        this.router.get('/', this.get);
-        this.router.get('/:id', this.getActivityType);
-        this.router.post('/', this.create);
-        this.router.put('/:id', this.update);
-        this.router.delete('/:id', this.delete);
+        this.router.get('/',verificaToken, this.get);
+        this.router.get('/:id',verificaToken, this.getActivityType);
+        this.router.post('/',verificaToken, this.create);
+        this.router.put('/:id',verificaToken, this.update);
+        this.router.delete('/:id',verificaToken, this.delete);
     }
 }
 

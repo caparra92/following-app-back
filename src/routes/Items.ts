@@ -121,11 +121,11 @@ class Items {
     }
 
     routes() {
-        this.router.get('/', this.get);
-        this.router.get('/:id', this.getItem);
-        this.router.post('/', this.create);
-        this.router.put('/:id', this.update);
-        this.router.delete('/:id', this.delete);
+        this.router.get('/',verificaToken, this.get);
+        this.router.get('/:id',verificaToken, this.getItem);
+        this.router.post('/',verificaToken, this.create);
+        this.router.put('/:id',verificaToken, this.update);
+        this.router.delete('/:id',verificaToken, this.delete);
     }
 }
 
