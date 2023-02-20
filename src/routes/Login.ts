@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express';
 import User from '../models/User';
-import  {verificaToken, verificaAdminRole} from '../middlewares/auth';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import * as config from '../config/config';
@@ -35,7 +34,7 @@ class Login {
     
             res.json({
                 ok: true,
-                usuario: user,
+                user: user,
                 token
               });
         } catch (error) {
