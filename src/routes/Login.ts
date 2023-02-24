@@ -28,6 +28,9 @@ class Login {
                     error : 'Error during authentication, please check email or password'
                 });
             }
+            if(user?.dataValues.password) {
+                delete user.dataValues.password;
+            }
             let token = jwt.sign({
                 user,
             }, config.SEED,{ expiresIn: process.env.EXPIRACION });
@@ -47,7 +50,7 @@ class Login {
     }
 
     async logout(req: Request, res: Response) {
-        res.send('Logout')
+        res.send('Logout successfull');
     }
 
     routes() {
