@@ -29,10 +29,14 @@ class Users {
             } 
             const user = await User.create({
                 name: body.name,
-                phone: body.phone,
                 email: body.email,
                 password: bcrypt.hashSync(body.password, 10)
             });
+            if(user?.dataValues.password || user?.dataValues.createdAt || user?.dataValues.updatedAt) {
+                delete user.dataValues.password;
+                delete user.dataValues.createdAt;
+                delete user.dataValues.updatedAt;
+            }
             await user.save();
             res.json({
                 ok: true,
@@ -145,7 +149,7 @@ class Users {
     routes() {
         this.router.get('/',verificaToken, this.get);
         this.router.get('/:id',verificaToken, this.getUser);
-        this.router.post('/',verificaToken, this.create);
+        this.router.post('/', this.create);
         this.router.put('/:id',verificaToken, this.update);
         this.router.delete('/:id',verificaToken, this.delete);
     }
