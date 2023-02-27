@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import Activity from '../models/Activity'
 import  {verificaToken, verificaAdminRole} from '../middlewares/auth';
+import Item from '../models/Item';
 
 class Activities {
 
@@ -67,6 +68,26 @@ class Activities {
         }
     }
 
+    async getItemsById(req: Request, res: Response) {
+        let { id } = req.params;
+        try {
+            const items = await Item.findAll({
+                where: {
+                    activity_id: id
+                }
+            });
+            res.json({
+                ok: true,
+                items
+            });
+        } catch (error) {
+            return res.status(500).json({
+                ok: false,
+                error
+            });
+        }
+    }
+
     async update(req: Request, res: Response) {
         
         let { id } = req.params;
@@ -123,6 +144,7 @@ class Activities {
     routes() {
         this.router.get('/',verificaToken, this.get);
         this.router.get('/:id',verificaToken, this.getActivity);
+        this.router.get('/:id/items',verificaToken, this.getItemsById);
         this.router.post('/',verificaToken, this.create);
         this.router.put('/:id',verificaToken, this.update);
         this.router.delete('/:id',verificaToken, this.delete);

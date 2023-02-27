@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import ActivityType from '../models/ActivityType'
 import  {verificaToken, verificaAdminRole} from '../middlewares/auth';
+import Activities from '../models/Activity';
 
 class ActivityTypes {
 
@@ -44,6 +45,26 @@ class ActivityTypes {
                 ok: false,
                 error
             }); 
+        }
+    }
+
+    async getActivitiesById(req: Request, res: Response) {
+        let { id } = req.params;
+        try {
+            const activities = await Activities.findAll({
+                where: {
+                    activity_type_id: id
+                }
+            });
+            res.json({
+                ok: true,
+                activities
+            });
+        } catch (error) {
+            return res.status(500).json({
+                ok: false,
+                error
+            });
         }
     }
 
@@ -122,6 +143,7 @@ class ActivityTypes {
     routes() {
         this.router.get('/',verificaToken, this.get);
         this.router.get('/:id',verificaToken, this.getActivityType);
+        this.router.get('/:id/activities',verificaToken, this.getActivitiesById);
         this.router.post('/',verificaToken, this.create);
         this.router.put('/:id',verificaToken, this.update);
         this.router.delete('/:id',verificaToken, this.delete);

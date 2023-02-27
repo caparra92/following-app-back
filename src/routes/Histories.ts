@@ -104,7 +104,7 @@ class Histories {
             const history = await History.findByPk(id);
             if(!history) {
                 return res.status(404).json({
-                    msg: 'Historie does not exist!'
+                    msg: 'History does not exist!'
                 });
             }
             
