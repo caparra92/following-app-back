@@ -17,11 +17,11 @@ class Activities {
         let { body } = req;
         
         try {
-            
+            console.log(body)
             const activity = await Activity.create({
                 name: body.name,
                 description: body.description,
-                activity_type_id: body.activity_type_id
+                activity_type_id: body.activityTypeId
             });
             await activity.save();
             res.json({

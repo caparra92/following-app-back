@@ -20,7 +20,7 @@ class Items {
             const item = await Item.create({
                 name: body.name,
                 description: body.description,
-                activity_id: body.activity_id
+                activity_id: body.activityId
             });
             await item.save();
             res.json({
