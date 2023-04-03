@@ -20,8 +20,8 @@ class Histories {
             const history = await History.create({
                 date: body.date,
                 value: body.value,
-                item_id: body.item_id,
-                activity_id: body.activity_id
+                item_id: body.itemId,
+                activity_id: body.activityId
             });
             await history.save();
             res.json({

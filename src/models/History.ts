@@ -7,7 +7,7 @@ const history = db.define('history', {
         type: DataTypes.DATE
     },
     value: {
-        type: DataTypes.STRING
+        type: DataTypes.INTEGER
     },
     item_id: {
         type: DataTypes.INTEGER
