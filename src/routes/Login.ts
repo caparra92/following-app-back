@@ -14,7 +14,6 @@ class Login {
     }
 
     async login(req: Request, res: Response) {
-
         let { body } = req;
         try {
             const user = await User.findOne({
@@ -22,7 +21,7 @@ class Login {
                     email: body.email
                 }
             });
-
+            
             if(!user || !bcrypt.compareSync(body.password, user?.dataValues.password)) {
                 return res.status(400).json({
                     error : 'Error during authentication, please check email or password'
@@ -31,9 +30,10 @@ class Login {
             if(user?.dataValues.password) {
                 delete user.dataValues.password;
             }
+            
             let token = jwt.sign({
                 user,
-            }, config.SEED,{ expiresIn: process.env.EXPIRACION });
+            }, config.SEED,{ expiresIn: process.env.EXPIRATION });
     
             res.json({
                 ok: true,

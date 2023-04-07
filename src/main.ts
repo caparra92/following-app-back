@@ -19,6 +19,7 @@ class Server {
         this.dbConnection();
         this.config();
         this.routes();
+        // console.log(db.config)
     }
 
     async dbConnection() {
