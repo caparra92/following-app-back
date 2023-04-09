@@ -51,7 +51,7 @@ interface ConfigurationObject {
 }
 
 const config: any = {
-    dev: {
+    development: {
         db: {
             username,
             password,
@@ -60,7 +60,7 @@ const config: any = {
         }
     },
     test: {},
-    prod: {
+    production: {
         db: {
             username,
             password,
