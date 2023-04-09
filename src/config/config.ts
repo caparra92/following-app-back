@@ -69,5 +69,7 @@ const config: ConfigurationObject = {
         }
     }
 }
+console.log("CONFIG is:::"+config)
+console.log("Config env is:::"+config[node_env as keyof ConfigurationObject])
 
 export const env =  config[node_env as keyof ConfigurationObject];
