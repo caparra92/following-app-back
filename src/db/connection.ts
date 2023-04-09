@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import { env } from '../config/config';
 
-const node_env = process.env.NODE_ENV;
+// const node_env = process.env.NODE_ENV;
 
 //========================
 //DB

@@ -80,7 +80,8 @@ class Items {
                 order: [
                     ['date', 'DESC']
                 ],
-                limit: [parseInt(offset), 9]
+                limit: 9,
+                offset: parseInt(offset), 
             });
             res.json({
                 ok: true,
