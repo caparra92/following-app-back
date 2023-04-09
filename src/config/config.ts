@@ -64,13 +64,12 @@ const config: ConfigurationObject = {
 
 export let urlDB: any;
 
-if(process.env.NODE_ENV === 'dev') {
-    urlDB = '//localhost:3306';
-} else {
-    urlDB = process.env.HOST;
-}
+// if(process.env.NODE_ENV === 'dev') {
+//     urlDB = '//localhost:3306';
+// } else {
+//     urlDB = process.env.HOST;
+// }
 
 process.env.HOST = urlDB;
 
 export const env =  config[node_env as keyof ConfigurationObject];
-
