@@ -1,6 +1,14 @@
 import * as dotenv from 'dotenv';
 
 dotenv.config();
+//====================
+//ENV VARS
+//====================
+let username;
+let password;
+let database;
+let host;
+
 //=====================
 //    PORT
 //=====================
@@ -20,21 +28,21 @@ process.env.EXPIRATION = EXPIRATION;
 //=====================
 export const SEED: string = process.env.SEED || 'este-es-el-seed-de-desarrollo';
 //=====================
-//    DB
+//    ENV
 //=====================
-const username = process.env.USRNAME as string;
-const password = process.env.PASSWORD as string;
-const database = process.env.DATABASE as string;
-const host = process.env.HOST as string;
 const node_env = process.env.NODE_ENV as string;
 
-//DB DEV
-//======================
-const devUsername = process.env.DEVUSRNAME as string;
-const devPassword = process.env.DEVPASSWORD as string;
-const devDatabase = process.env.DEVDATABASE as string;
-const devHost = process.env.DEVHOST as string;
-
+if(node_env !== 'dev'){
+    username = process.env.USRNAME as string;
+    password = process.env.PASSWORD as string;
+    database = process.env.DATABASE as string;
+    host = process.env.HOST as string; 
+} else {
+    username = process.env.DEVUSRNAME as string;
+    password = process.env.DEVPASSWORD as string;
+    database = process.env.DEVDATABASE as string;
+    host = process.env.DEVHOST as string; 
+}
 
 interface ConfigurationObject {
     dev: any,
@@ -45,10 +53,10 @@ interface ConfigurationObject {
 const config: ConfigurationObject = {
     dev: {
         db: {
-            devUsername,
-            devPassword,
-            devDatabase,
-            devHost
+            username,
+            password,
+            database,
+            host
         }
     },
     test: {},
@@ -61,15 +69,5 @@ const config: ConfigurationObject = {
         }
     }
 }
-
-export let urlDB: any;
-
-// if(process.env.NODE_ENV === 'dev') {
-//     urlDB = '//localhost:3306';
-// } else {
-//     urlDB = process.env.HOST;
-// }
-
-process.env.HOST = urlDB;
 
 export const env =  config[node_env as keyof ConfigurationObject];
