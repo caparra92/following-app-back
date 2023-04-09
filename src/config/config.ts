@@ -69,10 +69,10 @@ const config: any = {
         }
     }
 }
-console.log("CONFIG PROD username is:::"+config.prod.db.username)
-console.log("CONFIG PROD password is:::"+config.prod.db.password)
-console.log("CONFIG PROD database is:::"+config.prod.db.database)
-console.log("CONFIG PROD host is:::"+config.prod.db.host)
+console.log("CONFIG PROD username is:::"+config.production.db.username)
+console.log("CONFIG PROD password is:::"+config.production.db.password)
+console.log("CONFIG PROD database is:::"+config.production.db.database)
+console.log("CONFIG PROD host is:::"+config.production.db.host)
 console.log("Config env is:::"+config[node_env])
 
 export const env =  config[node_env];
