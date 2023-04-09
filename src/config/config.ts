@@ -14,7 +14,7 @@ let host;
 //=====================
 export const port: Number = parseInt(<string>process.env.PORT, 10) || 3000;
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 //=====================
 //    EXPIRATION Token
@@ -32,7 +32,7 @@ export const SEED: string = process.env.SEED || 'este-es-el-seed-de-desarrollo';
 //=====================
 const node_env = process.env.NODE_ENV as string;
 
-if(node_env !== 'dev'){
+if(node_env !== 'development'){
     username = process.env.USRNAME as string;
     password = process.env.PASSWORD as string;
     database = process.env.DATABASE as string;

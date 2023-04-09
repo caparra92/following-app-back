@@ -12,4 +12,6 @@ export const db = new Sequelize(env.db.database, env.db.username, env.db.passwor
     logging: true
 });
 
+console.log(db)
+
 export default db;
