@@ -50,7 +50,7 @@ interface ConfigurationObject {
     prod: any
 }
 
-const config: ConfigurationObject = {
+const config: any = {
     dev: {
         db: {
             username,
@@ -73,6 +73,6 @@ console.log("CONFIG PROD username is:::"+config.prod.db.username)
 console.log("CONFIG PROD password is:::"+config.prod.db.password)
 console.log("CONFIG PROD database is:::"+config.prod.db.database)
 console.log("CONFIG PROD host is:::"+config.prod.db.host)
-console.log("Config env is:::"+config[node_env as keyof ConfigurationObject])
+console.log("Config env is:::"+config[node_env])
 
-export const env =  config[node_env as keyof ConfigurationObject];
+export const env =  config[node_env];
