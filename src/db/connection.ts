@@ -2,7 +2,8 @@ import { Sequelize } from "sequelize";
 import { env } from '../config/config';
 
 // const node_env = process.env.NODE_ENV;
-console.log(env)
+console.log("ENV:::"+env)
+console.log("ENV is typeof: "+typeof env)
 //========================
 //DB
 //========================
