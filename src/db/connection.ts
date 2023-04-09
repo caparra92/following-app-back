@@ -5,8 +5,8 @@ import { env } from '../config/config';
 const node_env = process.env.NODE_ENV;
 //DEV
 //========================
-const devSeq = new Sequelize('following-app', 'root', 'Galo200992', {
-    host: 'localhost',
+const devSeq = new Sequelize(env.db.devDatabase, env.db.devUsername, env.db.devPassword, {
+    host: env.db.devHost,
     dialect: 'mysql',
     logging: true
 });
