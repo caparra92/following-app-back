@@ -38,8 +38,13 @@ class Activities {
 
     async get(req: Request, res: Response) {
 
+        let { id } = req.params;
         try {
-            const activities = await Activity.findAll();
+            const activities = await Activity.findAll({
+                where: {
+                    user_id: id
+                } 
+            });
             res.json(activities);
         } catch (error) {
             return res.status(500).json({
@@ -142,7 +147,7 @@ class Activities {
     }
 
     routes() {
-        this.router.get('/',verificaToken, this.get);
+        this.router.get('/user/:id',verificaToken, this.get);
         this.router.get('/:id',verificaToken, this.getActivity);
         this.router.get('/:id/items',verificaToken, this.getItemsById);
         this.router.post('/',verificaToken, this.create);
