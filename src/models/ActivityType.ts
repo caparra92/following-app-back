@@ -8,6 +8,9 @@ const activityType = db.define('activitytype', {
     },
     description: {
         type: DataTypes.STRING
+    },
+    user_id : {
+        type: DataTypes.STRING
     }
 },{freezeTableName:true});
 

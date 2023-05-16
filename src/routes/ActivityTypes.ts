@@ -20,7 +20,8 @@ class ActivityTypes {
             
             const activityType = await ActivityType.create({
                 name: body.name,
-                description: body.description
+                description: body.description,
+                user_id: body.user
             });
             await activityType.save();
             res.json({
@@ -37,8 +38,13 @@ class ActivityTypes {
 
     async get(req: Request, res: Response) {
 
+        let { id } = req.params;
         try {
-            const activityTypes = await ActivityType.findAll();
+            const activityTypes = await ActivityType.findAll({
+                where: {
+                    user_id: id
+                }
+            });
             res.json(activityTypes);
         } catch (error) {
             return res.status(500).json({
@@ -141,7 +147,7 @@ class ActivityTypes {
     }
 
     routes() {
-        this.router.get('/',verificaToken, this.get);
+        this.router.get('/user/:id',verificaToken, this.get);
         this.router.get('/:id',verificaToken, this.getActivityType);
         this.router.get('/:id/activities',verificaToken, this.getActivitiesById);
         this.router.post('/',verificaToken, this.create);

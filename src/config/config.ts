@@ -69,10 +69,5 @@ const config: ConfigurationObject = {
         }
     }
 }
-console.log("CONFIG PROD username is:::"+config.production.db.username)
-console.log("CONFIG PROD password is:::"+config.production.db.password)
-console.log("CONFIG PROD database is:::"+config.production.db.database)
-console.log("CONFIG PROD host is:::"+config.production.db.host)
-console.log("Config env is:::"+config[node_env as keyof ConfigurationObject])
 
 export const env =  config[node_env as keyof ConfigurationObject];
