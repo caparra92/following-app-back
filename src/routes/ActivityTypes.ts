@@ -55,11 +55,12 @@ class ActivityTypes {
     }
 
     async getActivitiesById(req: Request, res: Response) {
-        let { id } = req.params;
+        let { id, user } = req.params;
         try {
             const activities = await Activities.findAll({
                 where: {
-                    activity_type_id: id
+                    activity_type_id: id,
+                    user_id: user
                 }
             });
             res.json({
@@ -149,7 +150,7 @@ class ActivityTypes {
     routes() {
         this.router.get('/user/:id',verificaToken, this.get);
         this.router.get('/:id',verificaToken, this.getActivityType);
-        this.router.get('/:id/activities',verificaToken, this.getActivitiesById);
+        this.router.get('/:id/activities/user/:user',verificaToken, this.getActivitiesById);
         this.router.post('/',verificaToken, this.create);
         this.router.put('/:id',verificaToken, this.update);
         this.router.delete('/:id',verificaToken, this.delete);
