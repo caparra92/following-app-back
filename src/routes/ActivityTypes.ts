@@ -56,6 +56,7 @@ class ActivityTypes {
 
     async getActivitiesById(req: Request, res: Response) {
         let { id, user } = req.params;
+        console.log(user)
         try {
             const activities = await Activities.findAll({
                 where: {
