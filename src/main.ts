@@ -1,6 +1,7 @@
 import * as config from './config/config';
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import routes from './routes/Routes';
 import users from './routes/Users';
 import activities from './routes/Activities';
@@ -43,6 +44,7 @@ class Server {
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
         this.app.use(cors());
+        this.app.use(cookieParser());
     }
 
     routes() {

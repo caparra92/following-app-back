@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import User from '../models/User';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import cookieParser from 'cookie-parser';
 import * as config from '../config/config';
 
 class Login {
@@ -34,6 +35,16 @@ class Login {
             let token = jwt.sign({
                 user,
             }, config.SEED,{ expiresIn: process.env.EXPIRATION });
+
+            let refreshToken = jwt.sign({
+                user,
+            }, config.SEED,{ expiresIn: '3d' });
+
+            res.cookie('jwt', refreshToken, { 
+                httpOnly: true,
+                sameSite: false,
+                secure: true,
+                maxAge: 24 * 60 * 60 * 1000});
     
             res.json({
                 ok: true,
@@ -49,12 +60,45 @@ class Login {
 
     }
 
+    async refresh(req: Request, res: Response) {
+        let { body } = req;
+        const user = await User.findOne({
+            where: {
+                email: body.email
+            }
+        });
+        //console.log(req);
+        if(req.cookies?.jwt) {
+            const refreshToken = req.cookies.jwt;
+            console.log(`Refresh token: ${refreshToken}`);
+            jwt.verify(refreshToken, config.SEED, 
+                (err: any) => {
+                    if (err) {
+                        // Wrong Refesh Token
+                        return res.status(406).json({ message: 'Unauthorized with error'+ err });
+                    }
+                    else {
+                        // Correct token we send a new access token
+                        const token = jwt.sign({
+                            user
+                        }, config.SEED, {
+                            expiresIn: process.env.EXPIRATION
+                        });
+                        return res.json({ token });
+                    }
+                })
+            } else {
+                return res.status(406).json({ message: 'Unauthorized' });
+            }
+    }
+
     async logout(req: Request, res: Response) {
         res.send('Logout successfull');
     }
 
     routes() {
         this.router.post('/', this.login);
+        this.router.post('/refresh', this.refresh);
         this.router.get('/', this.logout);
     }
 }
