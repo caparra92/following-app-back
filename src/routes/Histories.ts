@@ -86,7 +86,7 @@ class Histories {
             
             res.json({
                 ok: true,
-                history
+                message: 'History updated successfully'
             });
         } catch (error) {
             return res.status(500).json({
